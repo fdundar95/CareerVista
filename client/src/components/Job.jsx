@@ -5,7 +5,6 @@ import JobInfo from './JobInfo';
 import dayjs from 'dayjs';
 import { deleteJob, setEditJob } from '../features/job/jobSlice';
 
-
 const Job = ({
   _id,
   position,
@@ -17,7 +16,7 @@ const Job = ({
 }) => {
   const dispatch = useDispatch();
     const date = dayjs(createdAt).format('MMM D, YYYY');
-  return (
+    return (
     <article className='bg-white rounded grid grid-rows-1fr-auto shadow-md'>
       <header className='py-4 px-6 border-b-gray-100 border-solid grid grid-cols-auto-1fr items-center'>
         <div className='w-16 h-16 grid items-center bg-primary-500 rounded text-2xl font-bold uppercase text-white mr-8'>
