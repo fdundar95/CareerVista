@@ -7,16 +7,16 @@ const customFetch = axios.create({
 });
 
 customFetch.interceptors.request.use(
-  (config) => {
-    const user = getUserFromLocalStorage();
-    if (user) {
-      config.headers['Authorization'] = `Bearer ${user.token}`;
+    (config) => {
+      const user = getUserFromLocalStorage();
+      if (user) {
+        config.headers['Authorization'] = `Bearer ${user.token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
     }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
 );
 
 export const checkForUnauthorizedResponse = (error, thunkAPI) => {

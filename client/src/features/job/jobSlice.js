@@ -1,8 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import customFetch from '../../utils/axios';
 import { getUserFromLocalStorage } from '../../utils/localStorage';
-import { getAllJobs, hideLoading, showLoading } from '../allJobs/allJobsSlice';
 import { createJobThunk, deleteJobThunk, editJobThunk } from './jobThunk';
 
 const initialState = {
@@ -42,34 +40,34 @@ const jobSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createJob.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(createJob.fulfilled, (state) => {
-        state.isLoading = false;
-        toast.success('Job Created');
-      })
-      .addCase(createJob.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        toast.error(payload);
-      })
-      .addCase(deleteJob.fulfilled, (state, { payload }) => {
-        toast.success(payload);
-      })
-      .addCase(deleteJob.rejected, (state, { payload }) => {
-        toast.error(payload);
-      })
-      .addCase(editJob.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(editJob.fulfilled, (state) => {
-        state.isLoading = false;
-        toast.success('Job edited...');
-      })
-      .addCase(editJob.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        toast.error(payload);
-      });
+        .addCase(createJob.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(createJob.fulfilled, (state) => {
+          state.isLoading = false;
+          toast.success('Job Created');
+        })
+        .addCase(createJob.rejected, (state, { payload }) => {
+          state.isLoading = false;
+          toast.error(payload);
+        })
+        .addCase(deleteJob.fulfilled, (state, { payload }) => {
+          toast.success(payload);
+        })
+        .addCase(deleteJob.rejected, (state, { payload }) => {
+          toast.error(payload);
+        })
+        .addCase(editJob.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(editJob.fulfilled, (state) => {
+          state.isLoading = false;
+          toast.success('Job edited...');
+        })
+        .addCase(editJob.rejected, (state, { payload }) => {
+          state.isLoading = false;
+          toast.error(payload);
+        });
   },
 });
 

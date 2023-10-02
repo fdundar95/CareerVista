@@ -14,6 +14,7 @@ const FormRow = ({ type, name, value, handleChange, labelText }) => {
         value={value}
         onChange={handleChange}
         className='w-full py-2 px-3 rounded bg-gray-50 border-gray-200 border-2 h-9'
+        required
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Logo, FormRow } from '../components';
+import { FormRow, Logo } from '../components';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, registerUser } from '../features/user/userSlice';
@@ -64,6 +64,27 @@ const Register = () => {
             type='text'
             name='name'
             value={values.name}
+            handleChange={handleChange}
+          />
+        )}
+        {/* last name field */}
+        {!values.isMember && (
+          <FormRow
+            type='text'
+            name='lastName'
+            labelText={'Last Name'}
+            // value={values.name}
+
+            handleChange={handleChange}
+          />
+        )}
+        {/* location field */}
+        {!values.isMember && (
+          <FormRow
+            type='text'
+            name='location'
+            // value={values.name}
+
             handleChange={handleChange}
           />
         )}
