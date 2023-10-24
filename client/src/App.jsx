@@ -8,9 +8,18 @@ import {
   DashboardLayout,
   Stats,
 } from './pages/dashboard';
-import { Error, Landing, ProtectedRoute, Register, RootLayout } from './pages';
+import {
+  Error,
+  Landing,
+  ProtectedRoute,
+  Register,
+  Login,
+  RootLayout,
+} from './pages';
 
 import { action as registerAction } from './pages/Register';
+import { action as loginAction } from './pages/Login';
+import { loader as dashboardLoader } from './pages/dashboard/DashboardLayout';
 
 const router = createBrowserRouter([
   {
@@ -19,26 +28,29 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        element: (
-          <ProtectedRoute>
-            <DashboardLayout />
-          </ProtectedRoute>
-        ),
-        children: [
-          { index: true, element: <Stats /> },
-          { path: 'all-jobs', element: <AllJobs /> },
-          { path: '/add-job', element: <AddJob /> },
-          { path: '/profile', element: <Profile /> },
-        ],
-      },
-      {
-        path: '/landing',
+        index: true,
         element: <Landing />,
       },
       {
         path: '/register',
         element: <Register />,
         action: registerAction,
+      },
+      {
+        path: '/login',
+        element: <Login />,
+        action: loginAction,
+      },
+      {
+        path: '/dashboard',
+        element: <DashboardLayout />,
+        loader: dashboardLoader,
+        children: [
+          { index: true, element: <Stats /> },
+          { path: 'all-jobs', element: <AllJobs /> },
+          { path: 'add-job', element: <AddJob /> },
+          { path: 'profile', element: <Profile /> },
+        ],
       },
     ],
   },

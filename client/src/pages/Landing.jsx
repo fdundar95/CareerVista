@@ -21,7 +21,7 @@ const Landing = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to={'/register'}>
+              <NavLink to={'/login'}>
                 <h5
                   className={
                     'hover:text-primary-500 transition-all duration-300 ease-in-out'

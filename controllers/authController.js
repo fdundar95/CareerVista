@@ -20,7 +20,7 @@ export const login = async (req, res) => {
   const isValidUser =
     user && (await comparePassword(req.body.password, user.password));
 
-  if (!isValidUser) throw new UnauthenticatedError('invalid credentials');
+  if (!isValidUser) throw new UnauthenticatedError('Invalid credentials');
 
   const token = createJWT({ userId: user._id, role: user.role });
 
@@ -38,6 +38,7 @@ export const logout = (req, res) => {
   res.cookie('token', 'logout', {
     httpOnly: true,
     expires: new Date(Date.now()),
+    maxAge: 0,
   });
   res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
 };
