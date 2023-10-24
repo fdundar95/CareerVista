@@ -3,15 +3,6 @@ import { clearAllJobsState } from '../allJobs/allJobsSlice';
 import { clearValues } from '../job/jobSlice';
 import { logoutUser } from './userSlice';
 
-export const registerUserThunk = async (user, thunkAPI) => {
-  try {
-    const resp = await customFetch.post('/auth/register', user);
-    return resp.data;
-  } catch (error) {
-    return checkForUnauthorizedResponse(error, thunkAPI);
-  }
-};
-
 export const loginUserThunk = async (user, thunkAPI) => {
   try {
     const resp = await customFetch.post('/auth/login', user);

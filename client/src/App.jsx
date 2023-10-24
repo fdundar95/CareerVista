@@ -10,6 +10,8 @@ import {
 } from './pages/dashboard';
 import { Error, Landing, ProtectedRoute, Register, RootLayout } from './pages';
 
+import { action as registerAction } from './pages/Register';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -36,9 +38,7 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register />,
-        action: () => {
-          console.log('hello');
-        },
+        action: registerAction,
       },
     ],
   },
