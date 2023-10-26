@@ -25,6 +25,8 @@ const Error = () => {
     );
   }
 
+  console.log(error);
+
   return (
     <main className='min-h-screen text-center flex items-center justify-center'>
       <div>
@@ -34,7 +36,9 @@ const Error = () => {
           className='w-fluid max-w-2xl block mb-8'
         />
         <h3 className='mb-2'>Ohh! </h3>
-        <p className='mt-0 mb-2 text-gray-500'>Something Went Wrong...</p>
+        <p className='mt-0 mb-2 mx-auto text-gray-500'>
+          Something Went Wrong...
+        </p>
         <Link to={'/'} className='text-primary-500 underline'>
           Back Home
         </Link>

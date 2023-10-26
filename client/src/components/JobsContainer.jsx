@@ -2,32 +2,11 @@ import { useEffect } from 'react';
 import Job from './Job';
 import LoadingSpinner from './LoadingSpinner';
 import PageBtnContainer from './PageBtnContainer';
+import { useAllJobsContext } from '../pages/dashboard/AllJobs';
 
 const JobsContainer = () => {
-  const {
-    jobs,
-    isLoading,
-    page,
-    totalJobs,
-    numOfPages,
-    search,
-    searchStatus,
-    searchType,
-    sort,
-  } = useSelector((store) => store.allJobs);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllJobs());
-  }, [page, search, searchStatus, searchType, sort]);
-
-  if (isLoading) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  const { data } = useAllJobsContext();
+  const { jobs, totalJobs, numOfPages, currentPage } = data;
 
   if (jobs.length === 0) {
     return <h2 className='transform-none'>No jobs to display...</h2>;

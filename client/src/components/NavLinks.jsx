@@ -3,11 +3,17 @@ import { NavLink } from 'react-router-dom';
 import { useDashboardContext } from '../pages/dashboard/DashboardLayout';
 
 const NavLinks = ({ classes, isBigSidebar }) => {
-  const { toggleSidebar } = useDashboardContext();
+  const { toggleSidebar, user } = useDashboardContext();
   return (
     <div className='pt-8 flex flex-col'>
       {links.map((link) => {
         const { text, path, id, icon } = link;
+        const { role } = user;
+
+        if (path === 'admin' && role !== 'admin') {
+          return;
+        }
+
         return (
           <NavLink
             key={id}

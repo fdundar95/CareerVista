@@ -1,7 +1,9 @@
 import { FaBriefcase, FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, Form } from 'react-router-dom';
 import JobInfo from './JobInfo';
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+dayjs.extend(advancedFormat);
 
 const Job = ({
   _id,
@@ -10,9 +12,9 @@ const Job = ({
   jobLocation,
   jobType,
   createdAt,
-  status,
+  jobStatus,
 }) => {
-  const date = dayjs(createdAt).format('MMM D, YYYY');
+  const date = dayjs(createdAt).format('MMM Do, YYYY');
   return (
     <article className='bg-white rounded grid grid-rows-1fr-auto shadow-md'>
       <header className='py-4 px-6 border-b-gray-100 border-solid grid grid-cols-auto-1fr items-center'>
@@ -32,40 +34,27 @@ const Job = ({
           <JobInfo icon={<FaCalendarAlt />} text={date} />
           <JobInfo icon={<FaBriefcase />} text={jobType} />
           <div
-            className={`rounded capitalize tracking-wider text-center w-24 h-7 mt-2 ${status}`}
+            className={`rounded capitalize tracking-wider text-center w-24 h-7 mt-2 ${jobStatus}`}
           >
-            {status}
+            {jobStatus}
           </div>
         </div>
         <footer className='mt-4'>
           <div>
             <Link
-              to={'/add-job'}
-              onClick={() => {
-                dispatch(
-                  setEditJob({
-                    editJobId: _id,
-                    position,
-                    company,
-                    jobLocation,
-                    jobType,
-                    status,
-                  })
-                );
-              }}
+              to={`../edit-job/${_id}`}
               className='btn text-white bg-primary-300/90 mr-2 tracking-wider cursor-pointer h-7 hover:bg-primary-700'
             >
               Edit
             </Link>
-            <button
-              type='button'
-              onClick={() => {
-                dispatch(deleteJob(_id));
-              }}
-              className='btn bg-gray-200-200 text-red-400 tracking-wider cursor-pointer h-7 hover:bg-red-400 hover:text-red-50'
-            >
-              Delete
-            </button>
+            <Form method='post' action={`../delete-job/${_id}`}>
+              <button
+                type='submit'
+                className='btn bg-gray-200-200 text-red-400 tracking-wider cursor-pointer h-7 hover:bg-red-400 hover:text-red-50'
+              >
+                Delete
+              </button>
+            </Form>
           </div>
         </footer>
       </div>

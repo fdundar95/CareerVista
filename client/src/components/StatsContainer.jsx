@@ -20,7 +20,7 @@ const StatsContainer = () => {
       bcg: 'bg-primary-100',
     },
     {
-      title: 'pending applications',
+      title: 'declined applications',
       count: stats.declined || 0,
       icon: <FaBug className='text-red-400 m-auto' />,
       color: 'text-red-400',
