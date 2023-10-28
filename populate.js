@@ -7,8 +7,8 @@ import Job from './models/JobModel.js';
 import User from './models/UserModel.js';
 
 try {
-  await mongoose.connect(process.env.MONGO_URL);
-  const user = await User.findOne({ email: 'john@gmail.com' });
+  await mongoose.connect(process.env.MONGO_URI);
+  const user = await User.findOne({ email: 'admin@admin.com' });
   const jsonJobs = JSON.parse(
     await readFile(new URL('./utils/mockData.json', import.meta.url))
   );

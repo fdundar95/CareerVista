@@ -17,6 +17,7 @@ import { action as loginAction } from './pages/Login';
 import { action as addJobAction } from './pages/dashboard/AddJob';
 import { action as editJobAction } from './pages/dashboard/EditJob';
 import { action as deleteJobAction } from './pages/dashboard/DeleteJob';
+import { action as profileAction } from './pages/dashboard/Profile';
 import { loader as editJobLoader } from './pages/dashboard/EditJob';
 import { loader as dashboardLoader } from './pages/dashboard/DashboardLayout';
 import { loader as allJobsLoader } from './pages/dashboard/AllJobs';
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
           { index: true, element: <Stats /> },
           { path: 'all-jobs', element: <AllJobs />, loader: allJobsLoader },
           { path: 'add-job', element: <AddJob />, action: addJobAction },
-          { path: 'profile', element: <Profile /> },
+          { path: 'profile', element: <Profile />, action: profileAction },
           {
             path: 'edit-job/:id',
             element: <EditJob />,

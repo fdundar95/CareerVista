@@ -66,7 +66,7 @@ const EditJob = () => {
           />
           {/* submit button */}
           <div className='gap-x-4 self-end mt-2 lg:mt-0'>
-            <SubmitBtn />
+            <SubmitBtn text={'Save Changes'} />
           </div>
         </div>
       </Form>

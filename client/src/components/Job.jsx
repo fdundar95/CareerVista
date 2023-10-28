@@ -40,17 +40,17 @@ const Job = ({
           </div>
         </div>
         <footer className='mt-4'>
-          <div>
+          <div className='flex items-center'>
             <Link
               to={`../edit-job/${_id}`}
-              className='btn text-white bg-primary-300/90 mr-2 tracking-wider cursor-pointer h-7 hover:bg-primary-700'
+              className='btn text-white bg-primary-300/90 py-1 mr-3 tracking-wider cursor-pointer h-7 hover:bg-primary-700'
             >
               Edit
             </Link>
             <Form method='post' action={`../delete-job/${_id}`}>
               <button
                 type='submit'
-                className='btn bg-gray-200-200 text-red-400 tracking-wider cursor-pointer h-7 hover:bg-red-400 hover:text-red-50'
+                className='btn bg-gray-200-200 text-red-400 py-1 tracking-wider cursor-pointer h-7 hover:bg-red-400 hover:text-red-50'
               >
                 Delete
               </button>

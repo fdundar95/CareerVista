@@ -1,5 +1,5 @@
 import { useNavigation } from 'react-router-dom';
-const SubmitBtn = ({ formBtn }) => {
+const SubmitBtn = ({ text }) => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
   return (
@@ -8,7 +8,7 @@ const SubmitBtn = ({ formBtn }) => {
       className={`btn bg-primary-500 text-white w-full mt-4 h-9 hover:bg-primary-700`}
       disabled={isSubmitting}
     >
-      {isSubmitting ? 'Submitting' : 'Submit'}
+      {isSubmitting ? 'Please Wait...' : text}
     </button>
   );
 };

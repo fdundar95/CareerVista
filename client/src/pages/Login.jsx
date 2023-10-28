@@ -1,7 +1,7 @@
 import { FormRow, Logo } from '../components';
 import { toast } from 'react-toastify';
 import SubmitBtn from '../components/SubmitBtn';
-import { Link, Form, redirect } from 'react-router-dom';
+import { Link, Form, redirect, useNavigate } from 'react-router-dom';
 import customFetch from '../utils/axios';
 
 export const action = async ({ request }) => {
@@ -19,6 +19,20 @@ export const action = async ({ request }) => {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const loginDemoUser = async () => {
+    const data = { email: 'test@test.com', password: 'secret123' };
+
+    try {
+      await customFetch.post('/auth/login', data);
+      toast.success('Demo user login successful');
+      navigate('/dashboard');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+    }
+  };
+
   return (
     <section className='min-h-screen grid items-center'>
       <Form
@@ -29,13 +43,11 @@ const Login = () => {
         <h3 className='text-center'>Login</h3>
         <FormRow type='email' name='email' />
         <FormRow type='password' name='password' />
-        <SubmitBtn />
+        <SubmitBtn text={'Login'} />
         <button
           type='button'
           className='btn bg-primary-300 text-white w-full mt-4 h-9 hover:bg-primary-700'
-          onClick={() => {
-            console.log('demo user');
-          }}
+          onClick={loginDemoUser}
         >
           Explore the app
         </button>

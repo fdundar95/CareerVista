@@ -37,7 +37,7 @@ const Register = () => {
         <FormRow type='email' name='email' />
         {/* password field */}
         <FormRow type='password' name='password' />
-        <SubmitBtn />
+        <SubmitBtn text={'Register'} />
         <p className='m-0 mt-4 text-center'>
           Already a member?
           <Link

@@ -27,7 +27,15 @@ const Navbar = () => {
             className='btn bg-primary-400/90 text-primary-50 flex items-center content-center gap-y-0 gap-x-2 relative shadow-md'
             onClick={() => setShowLogout(!showLogout)}
           >
-            <FaUserCircle />
+            {user.avatar ? (
+              <img
+                src={user.avatar}
+                alt='avatar'
+                className='w-6 h-6 rounded-full block object-cover'
+              />
+            ) : (
+              <FaUserCircle />
+            )}
             {user?.name}
             <FaCaretDown />
           </button>

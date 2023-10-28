@@ -1,74 +1,74 @@
 import FormRow from '../../components/FormRow';
 import { useState } from 'react';
+import { Form, useNavigation, useOutletContext } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import customFetch from '../../utils/axios';
+import { SubmitBtn } from '../../components';
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const file = formData.get('avatar');
+  if (file && file.size > 500000) {
+    toast.error('Image size too large. Must be less than 0.5 MB');
+    return null;
+  }
+
+  try {
+    await customFetch.patch('/users/update-user', formData);
+    toast.success('Profile updated successfully');
+  } catch (error) {
+    toast.error(error?.response?.data?.msg);
+  }
+  return null;
+};
 
 const Profile = () => {
-  const [userData, setUserData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    lastName: user?.lastName || '',
-    location: user?.location || '',
-  });
-
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUserData({ ...userData, [name]: value });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { name, email, lastName, location } = userData;
-
-    if (!name || !email || !lastName || !location) {
-      toast.error('Please fill out all fields');
-      return;
-    }
-    dispatch(updateUser({ name, email, lastName, location }));
-  };
+  const { user } = useOutletContext();
+  const { name, lastName, email, location } = user;
 
   return (
     <section className='rounded w-full bg-white pt-12 pb-16 px-8 shadow-md hover:shadow-xl'>
-      <form
+      <Form
         className='w-full max-w-full bg-white rounded-none p-0 m-0 transition-all duration-300 ease-in-out'
-        onSubmit={handleSubmit}
+        method='post'
+        encType='multipart/form-data'
       >
         <h3 className='-mt-7 mb-2 md:my-0'>Profile</h3>
-
         <div className='grid gap-y-2 lg:grid-cols-2 items-center gap-x-4 xl:grid-cols-3'>
-          <FormRow
-            type={'text'}
-            name={'name'}
-            value={userData.name}
-            handleChange={handleChange}
-          />
+          {/* file input */}
+          <div>
+            <label
+              htmlFor='image'
+              className='mt-4 block text-sm mb-2 tracking-widest capitalize'
+            >
+              Select an image file (max 0.5 MB):
+            </label>
+            <input
+              type='file'
+              id='avatar'
+              name='avatar'
+              className='w-full py-1 px-3 rounded bg-gray-50 border-gray-200 border-2 h-9'
+              accept='image/*'
+            />
+          </div>
+          {/* name */}
+          <FormRow type={'text'} name={'name'} defaultValue={name} />
+          {/* last name */}
           <FormRow
             type={'text'}
             labelText={'last name'}
             name={'lastName'}
-            value={userData.lastName}
-            handleChange={handleChange}
+            defaultValue={lastName}
           />
-          <FormRow
-            type={'email'}
-            name={'email'}
-            value={userData.email}
-            handleChange={handleChange}
-          />
-          <FormRow
-            type={'text'}
-            name={'location'}
-            value={userData.location}
-            handleChange={handleChange}
-          />
-          <button
-            type='submit'
-            className='btn bg-primary-500 text-white h-9 mt-4 self-end w-full hover:bg-primary-700 xl:mt-0'
-            disabled={isLoading}
-          >
-            {isLoading ? 'Please Wait...' : 'Save Changes'}
-          </button>
+          {/* email */}
+          <FormRow type={'email'} name={'email'} defaultValue={email} />
+          {/* location */}
+          <FormRow type={'text'} name={'location'} defaultValue={location} />
+          <div className='gap-x-4 self-end mt-2 lg:mt-0'>
+            <SubmitBtn text={'Save Changes'} />
+          </div>
         </div>
-      </form>
+      </Form>
     </section>
   );
 };
