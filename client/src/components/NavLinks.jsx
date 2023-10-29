@@ -22,6 +22,7 @@ const NavLinks = ({ classes, isBigSidebar }) => {
               isActive ? `nav-link ${classes} active` : `nav-link ${classes}`
             }
             onClick={isBigSidebar ? null : toggleSidebar}
+            end
           >
             <span className='text-2xl mr-4 grid place-items-center transition-all duration-300 ease-in-out hover:text-primary-500 icon'>
               {icon}

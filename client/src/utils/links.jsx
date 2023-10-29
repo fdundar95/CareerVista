@@ -8,7 +8,7 @@ const links = [
   {
     id: 1,
     text: 'stats',
-    path: 'stats',
+    path: '',
     icon: <IoBarChartSharp />,
   },
   {

@@ -1,11 +1,11 @@
 import { FaBug, FaCalendarCheck, FaSuitcaseRolling } from 'react-icons/fa';
 import StatItem from './statItem';
 
-const StatsContainer = () => {
+const StatsContainer = ({ userStats }) => {
   const defaultStats = [
     {
       title: 'pending applications',
-      count: stats.pending || 0,
+      count: userStats?.pending || 0,
       icon: <FaSuitcaseRolling className='text-yellow-500 m-auto' />,
       color: 'text-yellow-500',
       border: 'border-yellow-500',
@@ -13,7 +13,7 @@ const StatsContainer = () => {
     },
     {
       title: 'interviews scheduled',
-      count: stats.interview || 0,
+      count: userStats?.interview || 0,
       icon: <FaCalendarCheck className='text-primary-500 m-auto' />,
       color: 'text-primary-500',
       border: 'border-primary-500',
@@ -21,7 +21,7 @@ const StatsContainer = () => {
     },
     {
       title: 'declined applications',
-      count: stats.declined || 0,
+      count: userStats?.declined || 0,
       icon: <FaBug className='text-red-400 m-auto' />,
       color: 'text-red-400',
       border: 'border-red-400',

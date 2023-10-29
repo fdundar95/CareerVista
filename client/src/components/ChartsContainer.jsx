@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AreaChart, BarChart } from '../components';
 
-const ChartsContainer = () => {
+const ChartsContainer = ({ data }) => {
   const [barChart, setBarChart] = useState(true);
 
   return (

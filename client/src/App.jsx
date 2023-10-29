@@ -22,6 +22,7 @@ import { loader as editJobLoader } from './pages/dashboard/EditJob';
 import { loader as dashboardLoader } from './pages/dashboard/DashboardLayout';
 import { loader as allJobsLoader } from './pages/dashboard/AllJobs';
 import { loader as adminLoader } from './pages/dashboard/Admin';
+import { loader as statsLoader } from './pages/dashboard/Stats';
 
 const router = createBrowserRouter([
   {
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         loader: dashboardLoader,
         children: [
-          { index: true, element: <Stats /> },
+          { index: true, element: <Stats />, loader: statsLoader },
           { path: 'all-jobs', element: <AllJobs />, loader: allJobsLoader },
           { path: 'add-job', element: <AddJob />, action: addJobAction },
           { path: 'profile', element: <Profile />, action: profileAction },

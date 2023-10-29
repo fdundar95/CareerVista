@@ -75,24 +75,29 @@ export const deleteJob = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'job deleted', job: removedJob });
 };
 
+// This function retrieves statistics and monthly applications for a user
 export const showStats = async (req, res) => {
+  // Retrieve statistics for the user
   let stats = await Job.aggregate([
-    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
-    { $group: { _id: '$jobStatus', count: { $sum: 1 } } },
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } }, // Filter the documents based on the 'createdBy' field, which should match the 'userId' of the user making the request
+    { $group: { _id: '$jobStatus', count: { $sum: 1 } } }, // Filter the documents based on the 'createdBy' field, which should match the 'userId' of the user making the request
   ]);
 
+  // Reduce the stats array to an object with jobStatus as keys and count as values
   stats = stats.reduce((acc, curr) => {
     const { _id: title, count } = curr;
     acc[title] = count;
     return acc;
   }, {});
 
-  const defaultStats = {
+  // Set default values for each jobStatus if they are not present in the stats object
+  const userStats = {
     pending: stats.pending || 0,
     interview: stats.interview || 0,
     declined: stats.declined || 0,
   };
 
+  // Retrieve monthly applications for the user
   let monthlyApplications = await Job.aggregate([
     { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
     {
@@ -105,6 +110,7 @@ export const showStats = async (req, res) => {
     { $limit: 6 },
   ]);
 
+  // Map the monthlyApplications array to an array of objects with date and count properties
   monthlyApplications = monthlyApplications
     .map((item) => {
       const {
@@ -112,6 +118,7 @@ export const showStats = async (req, res) => {
         count,
       } = item;
 
+      // Format the date as MMM YY
       const date = day()
         .month(month - 1)
         .year(year)
@@ -121,5 +128,6 @@ export const showStats = async (req, res) => {
     })
     .reverse();
 
-  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
+  // Send the defaultStats and monthlyApplications as a JSON response
+  res.status(StatusCodes.OK).json({ userStats, monthlyApplications });
 };

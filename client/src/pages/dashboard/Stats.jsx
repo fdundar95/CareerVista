@@ -1,14 +1,25 @@
-import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import {
   ChartsContainer,
   LoadingSpinner,
   StatsContainer,
 } from '../../components';
+import customFetch from '../../utils/axios';
+import { useLoaderData, useNavigation } from 'react-router-dom';
+
+export const loader = async () => {
+  try {
+    const response = await customFetch.get('/jobs/stats');
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 
 const Stats = () => {
-  useEffect(() => {
-    dispatch(showStats());
-  }, []);
+  const navigation = useNavigation();
+  const { userStats, monthlyApplications } = useLoaderData();
+  const isLoading = navigation.state === 'loading';
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -16,8 +27,10 @@ const Stats = () => {
 
   return (
     <>
-      <StatsContainer />
-      {monthlyApplications.length > 0 && <ChartsContainer />}
+      <StatsContainer userStats={userStats} />
+      {monthlyApplications?.length > 0 && (
+        <ChartsContainer data={monthlyApplications} />
+      )}
     </>
   );
 };
