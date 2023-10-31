@@ -8,6 +8,5 @@ import { ToastContainer } from 'react-toastify';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <App />
-    <ToastContainer position='top-center' />
   </>
 );

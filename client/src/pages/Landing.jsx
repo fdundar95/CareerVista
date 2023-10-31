@@ -7,7 +7,7 @@ const Landing = () => {
     <main className='block bg-gradient-to-t from-primary-50 to-primary-100 overflow-x-hidden'>
       <header className='w-fluid max-w-6xl my-0 mx-auto h-24 flex items-center'>
         <Logo classes={'w-44 md:w-56 lg:w-64'} />
-        <nav className='ml-auto'>
+        <nav className='ml-auto mt-5'>
           <ul className='flex items-center mx-auto justify-between space-x-4 text-gray-600'>
             <li>
               <NavLink to={'/register'}>

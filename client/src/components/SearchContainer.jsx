@@ -1,87 +1,81 @@
-import { FormRow, FormRowSelect } from '.';
+import { Form, Link, useSubmit } from 'react-router-dom';
+import { FormRow, FormRowSelect, SubmitBtn } from '.';
 import { useEffect, useMemo, useState } from 'react';
+import { JOB_SORT_BY, JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
+import { useAllJobsContext } from '../pages/dashboard/AllJobs';
 
 const SearchContainer = () => {
-  return <div>SearchContainer</div>;
+  const { searchValues } = useAllJobsContext();
+  const { search, jobStatus, jobType, sort } = searchValues;
+
+  const submit = useSubmit();
+
+  const debounce = (onChange) => {
+    let timeout;
+    return (e) => {
+      const form = e.currentTarget.form;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        onChange(form);
+      }, 2000);
+    };
+  };
+
+  return (
+    <section className='rounded w-full bg-white pt-12 pb-16 px-8 shadow-md hover:shadow-xl'>
+      <Form className='w-full max-w-full'>
+        <h3 className='-mt-7 mb-2 md:my-0'>Search Form</h3>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 lg:grid-cols-3'>
+          {/* search position */}
+          <FormRow
+            type='text'
+            name='search'
+            defaultValue={search}
+            onChange={debounce((form) => {
+              submit(form);
+            })}
+          />
+          {/* search by status */}
+          <FormRowSelect
+            labelText='job status'
+            name='jobStatus'
+            defaultValue={jobStatus}
+            list={['all', ...Object.values(JOB_STATUS)]}
+            onChange={(e) => {
+              submit(e.currentTarget.form);
+            }}
+          />
+          {/* search by type */}
+          <FormRowSelect
+            labelText=' job type'
+            name='jobType'
+            defaultValue={jobType}
+            list={['all', ...Object.values(JOB_TYPE)]}
+            onChange={(e) => {
+              submit(e.currentTarget.form);
+            }}
+          />
+          {/* sort */}
+          <FormRowSelect
+            name='sort'
+            defaultValue={sort}
+            list={[...Object.values(JOB_SORT_BY)]}
+            onChange={(e) => {
+              submit(e.currentTarget.form);
+            }}
+          />
+          {/* <div className='gap-x-4 self-end mt-2 lg:mt-0'>
+            <SubmitBtn text={'Search'} />
+          </div> */}
+          <Link
+            to='/dashboard/all-jobs'
+            className='btn text-center h-9 self-end mt-4 bg-red-200 text-gray-800 lg:mt-0 hover:bg-red-300'
+          >
+            Reset Search Values
+          </Link>
+        </div>
+      </Form>
+    </section>
+  );
 };
-
-// const SearchContainer = () => {
-//   const [localSearch, setLocalSearch] = useState('');
-
-//   const debounce = () => {
-//     let timeoutID;
-//     return (e) => {
-//       setLocalSearch(e.target.value);
-//       clearTimeout(timeoutID);
-//       timeoutID = setTimeout(() => {
-//         dispatch(handleChange({ name: e.target.name, value: e.target.value }));
-//       }, 1000);
-//     };
-//   };
-
-//   const optimizedDebounce = useMemo(() => debounce(), []);
-
-//   const handleSearch = (e) => {
-//     dispatch(handleChange({ name: e.target.name, value: e.target.value }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     setLocalSearch('');
-//     dispatch(clearFilters());
-//   };
-
-//   useEffect(() => {
-//     return () => {
-//       dispatch(clearFilters());
-//     };
-//   }, []);
-
-//   return (
-//     <section className='rounded w-full bg-white pt-12 pb-16 px-8 shadow-md hover:shadow-xl'>
-//       <form className='w-full max-w-full'>
-//         <h3 className='-mt-7 mb-2 md:my-0'>Search Form</h3>
-//         <div className='grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 lg:grid-cols-3'>
-//           {/* search position */}
-//           <FormRow
-//             type='text'
-//             name='search'
-//             value={localSearch}
-//             handleChange={optimizedDebounce}
-//           />
-//           {/* search by status */}
-//           <FormRowSelect
-//             labelText='status'
-//             name='searchStatus'
-//             value={searchStatus}
-//             handleChange={handleSearch}
-//             list={['all', ...statusOptions]}
-//           />
-//           {/* search by type */}
-//           <FormRowSelect
-//             labelText='type'
-//             name='searchType'
-//             value={searchType}
-//             handleChange={handleSearch}
-//             list={['all', ...jobTypeOptions]}
-//           />
-//           {/* sort */}
-//           <FormRowSelect
-//             name='sort'
-//             value={sort}
-//             handleChange={handleSearch}
-//             list={sortOptions}
-//           />
-//           <button
-//             className='btn h-9 self-end mt-4 bg-red-200 lg:mt-0 hover:bg-red-300'
-//             disabled={isLoading}
-//             onClick={handleSubmit}
-//           >
-//             Clear Filters
-//           </button>
-//         </div>
-//       </form>
-//     </section>
-//   );
-// };
 export default SearchContainer;

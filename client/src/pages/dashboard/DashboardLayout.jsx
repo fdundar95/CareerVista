@@ -4,6 +4,7 @@ import {
   redirect,
   useNavigate,
   useNavigation,
+  useLocation,
 } from 'react-router-dom';
 import { createContext, useContext, useEffect, useState } from 'react';
 import {
@@ -31,6 +32,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isPageLoading = navigation.state === 'loading';
+  const location = useLocation();
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
@@ -55,7 +57,7 @@ const DashboardLayout = () => {
           <div>
             <Navbar />
             <div className='w-fluid my-0 mx-auto py-8 px-0 lg:w-11/12'>
-              {isPageLoading ? (
+              {isPageLoading && location.pathname !== '/dashboard/all-jobs' ? (
                 <LoadingSpinner />
               ) : (
                 <Outlet context={{ user }} />

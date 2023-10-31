@@ -1,4 +1,4 @@
-const FormRow = ({ type, name, defaultValue, handleChange, labelText }) => {
+const FormRow = ({ type, name, defaultValue, onChange, labelText }) => {
   return (
     <div>
       <label
@@ -12,7 +12,7 @@ const FormRow = ({ type, name, defaultValue, handleChange, labelText }) => {
         type={type}
         name={name}
         defaultValue={defaultValue || ''}
-        onChange={handleChange}
+        onChange={onChange}
         className='w-full py-2 px-3 rounded bg-gray-50 border-gray-200 border-2 h-9'
         required
       />

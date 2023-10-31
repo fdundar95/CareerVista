@@ -4,12 +4,15 @@ import mongoose from 'mongoose';
 import day from 'dayjs';
 
 export const getAllJobs = async (req, res) => {
+  // Extract search, jobStatus, jobType, and sort from req.query
   const { search, jobStatus, jobType, sort } = req.query;
 
+  // Create a query object with the createdBy field set to req.user.userId
   const queryObject = {
     createdBy: req.user.userId,
   };
 
+  // If search is present, add $or condition to the queryObject
   if (search) {
     queryObject.$or = [
       { position: { $regex: search, $options: 'i' } },
@@ -17,13 +20,17 @@ export const getAllJobs = async (req, res) => {
     ];
   }
 
+  // If jobStatus is present and not equal to 'all', add jobStatus condition to the queryObject
   if (jobStatus && jobStatus !== 'all') {
     queryObject.jobStatus = jobStatus;
   }
+
+  // If jobType is present and not equal to 'all', add jobType condition to the queryObject
   if (jobType && jobType !== 'all') {
     queryObject.jobType = jobType;
   }
 
+  // Define sort options
   const sortOptions = {
     newest: '-createdAt',
     oldest: 'createdAt',
@@ -31,21 +38,33 @@ export const getAllJobs = async (req, res) => {
     'z-a': '-position',
   };
 
+  // Get the sort key based on the sort parameter
   const sortKey = sortOptions[sort] || sortOptions.newest;
 
-  // setup pagination
+  // Setup pagination
 
+  // Get page number from req.query, default to 1 if not present
   const page = Number(req.query.page) || 1;
+
+  // Get limit from req.query, default to 10 if not present
   const limit = Number(req.query.limit) || 10;
+
+  // Calculate the number of documents to skip based on page and limit
   const skip = (page - 1) * limit;
 
+  // Find jobs based on the queryObject, sort them based on sortKey, skip the first skip documents, and limit the result to limit documents
   const jobs = await Job.find(queryObject)
     .sort(sortKey)
     .skip(skip)
     .limit(limit);
 
+  // Count the total number of jobs based on the queryObject
   const totalJobs = await Job.countDocuments(queryObject);
+
+  // Calculate the number of pages based on totalJobs and limit
   const numOfPages = Math.ceil(totalJobs / limit);
+
+  // Send a JSON response with the totalJobs, numOfPages, currentPage, and jobs
   res
     .status(StatusCodes.OK)
     .json({ totalJobs, numOfPages, currentPage: page, jobs });

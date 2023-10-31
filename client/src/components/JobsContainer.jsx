@@ -3,10 +3,20 @@ import Job from './Job';
 import LoadingSpinner from './LoadingSpinner';
 import PageBtnContainer from './PageBtnContainer';
 import { useAllJobsContext } from '../pages/dashboard/AllJobs';
+import { useNavigation } from 'react-router-dom';
 
 const JobsContainer = () => {
   const { data } = useAllJobsContext();
   const { jobs, totalJobs, numOfPages, currentPage } = data;
+  const navigation = useNavigation();
+
+  if (navigation.state === 'loading') {
+    return (
+      <div className='w-fluid my-0 mx-auto py-8 px-0 lg:w-11/12'>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (jobs.length === 0) {
     return <h2 className='transform-none'>No jobs to display...</h2>;
