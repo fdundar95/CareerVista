@@ -5,20 +5,26 @@ import {
   StatsContainer,
 } from '../../components';
 import customFetch from '../../utils/axios';
-import { useLoaderData, useNavigation } from 'react-router-dom';
+import { useNavigation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
-export const loader = async () => {
-  try {
+const statsQuery = {
+  queryKey: ['stats'],
+  queryFn: async () => {
     const response = await customFetch.get('/jobs/stats');
     return response.data;
-  } catch (error) {
-    return error;
-  }
+  },
+};
+
+export const loader = (queryClient) => async () => {
+  const data = await queryClient.ensureQueryData(statsQuery);
+  return data;
 };
 
 const Stats = () => {
   const navigation = useNavigation();
-  const { userStats, monthlyApplications } = useLoaderData();
+  const { data } = useQuery(statsQuery);
+  const { userStats, monthlyApplications } = data;
   const isLoading = navigation.state === 'loading';
 
   if (isLoading) {

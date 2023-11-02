@@ -6,19 +6,22 @@ import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import customFetch from '../../utils/axios';
 
-export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
+export const action =
+  (queryClient) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
 
-  try {
-    await customFetch.post('/jobs', data);
-    toast.success('Job added');
-    return null;
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
-    return error;
-  }
-};
+    try {
+      await customFetch.post('/jobs', data);
+      queryClient.invalidateQueries(['jobs']);
+      toast.success('Job added successfully');
+      return redirect('all-jobs');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+      return error;
+    }
+  };
 
 const AddJob = () => {
   const { user } = useOutletContext();

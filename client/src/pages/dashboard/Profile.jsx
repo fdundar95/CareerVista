@@ -1,26 +1,35 @@
 import FormRow from '../../components/FormRow';
 import { useState } from 'react';
-import { Form, useNavigation, useOutletContext } from 'react-router-dom';
+import {
+  Form,
+  redirect,
+  useNavigation,
+  useOutletContext,
+} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import customFetch from '../../utils/axios';
 import { SubmitBtn } from '../../components';
 
-export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const file = formData.get('avatar');
-  if (file && file.size > 500000) {
-    toast.error('Image size too large. Must be less than 0.5 MB');
-    return null;
-  }
+export const action =
+  (queryClient) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const file = formData.get('avatar');
+    if (file && file.size > 500000) {
+      toast.error('Image size too large. Must be less than 0.5 MB');
+      return null;
+    }
 
-  try {
-    await customFetch.patch('/users/update-user', formData);
-    toast.success('Profile updated successfully');
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
-  }
-  return null;
-};
+    try {
+      await customFetch.patch('/users/update-user', formData);
+      toast.success('Profile updated successfully');
+      queryClient.invalidateQueries(['user']);
+      return redirect('/dashboard');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+    }
+    return null;
+  };
 
 const Profile = () => {
   const { user } = useOutletContext();
