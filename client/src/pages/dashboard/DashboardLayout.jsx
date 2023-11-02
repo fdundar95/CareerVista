@@ -16,6 +16,7 @@ import customFetch from '../../utils/axios';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
 
+// Define the user query for fetching the current user data
 const userQuery = {
   queryKey: ['user'],
   queryFn: async () => {
@@ -23,7 +24,7 @@ const userQuery = {
     return data;
   },
 };
-
+// Define the loader function for ensuring the user data is loaded before rendering the component
 export const loader = (queryClient) => async () => {
   try {
     return await queryClient.ensureQueryData(userQuery);
@@ -41,6 +42,7 @@ const DashboardLayout = ({ queryClient }) => {
   const isPageLoading = navigation.state === 'loading';
   const location = useLocation();
   const [showSidebar, setShowSidebar] = useState(false);
+  const [isAuthError, setIsAuthError] = useState(false);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -52,6 +54,23 @@ const DashboardLayout = ({ queryClient }) => {
     queryClient.invalidateQueries();
     toast.success('Logged out successfully');
   };
+  // Intercept the response errors and handle the 401 unauthorized status
+  customFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error?.response?.status === 401) {
+        setIsAuthError(true);
+      }
+      return Promise.reject(error);
+    }
+  );
+  // Handle the authentication error by logging out the user
+  useEffect(() => {
+    if (!isAuthError) return;
+    logoutUser();
+  }, [isAuthError]);
 
   return (
     <DashboardContext.Provider
