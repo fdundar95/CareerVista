@@ -6,12 +6,11 @@ This project is a full stack application that connects a front-end application b
 
 ## Live Demo
 
-_Since it is hosted on a free tier, it might take a while to spin up. Thank you for your patience._
-
 You can explore the app without registering using the'Explore the app' button in login page.
 
 **[Click here for Live Demo](https://careervista.onrender.com/)**
 
+_Since it is hosted on a free tier, it might take a while to spin up. Thank you for your patience._
 ## Screenshots
 
 ![stats](https://github.com/fdundar95/CareerVista/assets/79167732/1614039c-14ab-4812-9058-c5d535b32027)
