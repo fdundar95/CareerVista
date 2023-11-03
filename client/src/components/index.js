@@ -11,7 +11,7 @@ import SearchContainer from './SearchContainer';
 import LoadingSpinner from './LoadingSpinner';
 import StatsContainer from './StatsContainer';
 import ChartsContainer from './ChartsContainer';
-import StatItem from './statItem';
+import StatItem from './StatItem';
 import AreaChart from './AreaChart';
 import BarChart from './BarChart';
 import PageBtnContainer from './PageBtnContainer';

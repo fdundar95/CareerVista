@@ -1,5 +1,5 @@
 import { FaBug, FaCalendarCheck, FaSuitcaseRolling } from 'react-icons/fa';
-import StatItem from './statItem';
+import StatItem from './StatItem';
 
 const StatsContainer = ({ userStats }) => {
   const defaultStats = [

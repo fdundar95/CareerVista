@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react';
 import { JobsContainer, SearchContainer } from '../../components';
-import { toast } from 'react-toastify';
 import { useLoaderData } from 'react-router-dom';
 import customFetch from '../../utils/axios';
 import { useQuery } from '@tanstack/react-query';

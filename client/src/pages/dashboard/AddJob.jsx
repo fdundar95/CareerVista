@@ -3,7 +3,6 @@ import { useOutletContext } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../utils/constants';
 import { Form, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
 import customFetch from '../../utils/axios';
 
 export const action =
