@@ -7,7 +7,7 @@ import { useNavigation } from 'react-router-dom';
 
 const JobsContainer = () => {
   const { data } = useAllJobsContext();
-  const { jobs, totalJobs, numOfPages, currentPage } = data;
+  const { jobs, totalJobs, numOfPages } = data;
   const navigation = useNavigation();
 
   if (navigation.state === 'loading') {

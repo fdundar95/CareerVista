@@ -16,7 +16,6 @@ import customFetch from '../../utils/axios';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
 
-// Define the user query for fetching the current user data
 const userQuery = {
   queryKey: ['user'],
   queryFn: async () => {
@@ -24,7 +23,7 @@ const userQuery = {
     return data;
   },
 };
-// Define the loader function for ensuring the user data is loaded before rendering the component
+
 export const loader = (queryClient) => async () => {
   try {
     return await queryClient.ensureQueryData(userQuery);

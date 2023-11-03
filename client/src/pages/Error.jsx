@@ -25,8 +25,6 @@ const Error = () => {
     );
   }
 
-  console.log(error);
-
   return (
     <main className='min-h-screen text-center flex items-center justify-center'>
       <div>

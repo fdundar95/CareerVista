@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import day from 'dayjs';
 
 export const getAllJobs = async (req, res) => {
-  // Extract search, jobStatus, jobType, and sort from req.query
   const { search, jobStatus, jobType, sort } = req.query;
 
   // Create a query object with the createdBy field set to req.user.userId
@@ -30,15 +29,12 @@ export const getAllJobs = async (req, res) => {
     queryObject.jobType = jobType;
   }
 
-  // Define sort options
   const sortOptions = {
     newest: '-createdAt',
     oldest: 'createdAt',
     'a-z': 'position',
     'z-a': '-position',
   };
-
-  // Get the sort key based on the sort parameter
   const sortKey = sortOptions[sort] || sortOptions.newest;
 
   // Setup pagination

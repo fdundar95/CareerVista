@@ -1,14 +1,11 @@
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 import { useAllJobsContext } from '../pages/dashboard/AllJobs';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PageBtnContainer = () => {
   const {
     data: { numOfPages, currentPage },
   } = useAllJobsContext();
-  const pages = Array.from({ length: numOfPages }, (_, index) => {
-    return index + 1;
-  });
 
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
@@ -37,11 +34,11 @@ const PageBtnContainer = () => {
 
   const renderPageButtons = () => {
     const pageButtons = [];
-    // first page
+    // Add first page button
     pageButtons.push(
       addPageButton({ pageNumber: 1, activeClass: currentPage === 1 })
     );
-    // dots
+    // Add dots if current page is more than 3 pages away from the first page
     if (currentPage > 3) {
       pageButtons.push(
         <span
@@ -52,7 +49,7 @@ const PageBtnContainer = () => {
         </span>
       );
     }
-    // one before current page
+    // Add one page before the current page if it's not the first or second page
     if (currentPage !== 1 && currentPage !== 2) {
       pageButtons.push(
         addPageButton({
@@ -61,7 +58,7 @@ const PageBtnContainer = () => {
         })
       );
     }
-    // current page
+    // Add current page button
     if (currentPage !== 1 && currentPage !== numOfPages) {
       pageButtons.push(
         addPageButton({
@@ -70,7 +67,7 @@ const PageBtnContainer = () => {
         })
       );
     }
-    // one after current page
+    // Add one page after the current page if it's not the last or second last page
     if (currentPage !== numOfPages && currentPage !== numOfPages - 1) {
       pageButtons.push(
         addPageButton({
@@ -79,7 +76,7 @@ const PageBtnContainer = () => {
         })
       );
     }
-    // dots
+    // Add dots if current page is more than 2 pages away from the last page
     if (currentPage < numOfPages - 2) {
       pageButtons.push(
         <span
@@ -90,7 +87,7 @@ const PageBtnContainer = () => {
         </span>
       );
     }
-    // last page
+    // Add last page button
     pageButtons.push(
       addPageButton({
         pageNumber: numOfPages,

@@ -9,16 +9,17 @@ import mongoose from 'mongoose';
 import Job from '../models/JobModel.js';
 import User from '../models/UserModel.js';
 
+// Function to create a middleware with validation errors
 const withValidationErrors = (validateValues) => {
   return [
     validateValues,
     (req, res, next) => {
+      // Check if there are any validation errors
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const errorMessages = errors.array().map((error) => error.msg);
 
-        const firstMessage = errorMessages[0];
-        console.log(Object.getPrototypeOf(firstMessage));
+        // Handle specific error messages
         if (errorMessages[0].startsWith('No job')) {
           throw new NotFoundError(errorMessages);
         }

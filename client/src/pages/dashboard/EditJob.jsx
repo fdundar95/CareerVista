@@ -1,6 +1,6 @@
-import { useLoaderData, useParams } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../utils/constants';
-import { Form, useNavigation, redirect } from 'react-router-dom';
+import { Form, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FormRow, FormRowSelect, SubmitBtn } from '../../components';
 import customFetch from '../../utils/axios';
@@ -49,6 +49,7 @@ const EditJob = () => {
   const {
     data: { job },
   } = useQuery(singleJobQuery(id));
+
   return (
     <section className='rounded w-full bg-white pt-12 pb-16 px-8 shadow-md hover:shadow-xl'>
       <Form
