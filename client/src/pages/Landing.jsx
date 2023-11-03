@@ -40,9 +40,9 @@ const Landing = () => {
             Companion for <span className='text-primary-500'>Job Seekers</span>
           </h1>
           <p className='text-gray-600'>
-            Here you can track your job applications and track your application
-            process. Find a job you love, and you'll never have to work again.
-            Good luck!
+            Take control of your job search with CareerVista, where every
+            application counts. Find a job you love, and you'll never have to
+            work again. Good luck!
           </p>
           <Link
             to={'/register'}
