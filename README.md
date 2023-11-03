@@ -38,8 +38,7 @@ _Since it is hosted on a free tier, it might take a while to spin up. Thank you 
 
 ### Additional Features
 
-- **Search/Filter/Pagination**: The application includes search, filter, and pagination functionality on both the server and front-end.
-- **Cloudinary**: Users can upload profile photos to Cloudinary.
+- **Cloudinary**: User photos uploaded to Cloudinary.
 
 ## Environment Variables
 
